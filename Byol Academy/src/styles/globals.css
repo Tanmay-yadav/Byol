@@ -4048,10 +4048,6 @@ h2 {
   background: #080e18;
 }
 
-[data-theme="dark"] .site-header__inner {
-  gap: 18px;
-}
-
 [data-theme="dark"] .section--platforms,
 [data-theme="dark"] .section--engine,
 [data-theme="dark"] .section--proof,
@@ -4191,6 +4187,44 @@ h2 {
   background:
     radial-gradient(circle at center, rgb(245 179 1 / 12%), transparent 52%),
     #101c38;
+}
+
+[data-theme="dark"] .hero-features i,
+[data-theme="dark"] .hero-trust-line__dot {
+  background-color: #244536;
+}
+
+[data-theme="dark"] .audience-card__icon,
+[data-theme="dark"] .audience-card--2 .audience-card__icon,
+[data-theme="dark"] .audience-card--3 .audience-card__icon,
+[data-theme="dark"] .audience-card--4 .audience-card__icon {
+  background-color: #202d42;
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .demo-side-note__line,
+[data-theme="dark"] .demo-progress__track {
+  background: var(--color-border);
+}
+
+[data-theme="dark"] .answer-option {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+[data-theme="dark"] .trust-card--does .trust-card__label > span,
+[data-theme="dark"] .trust-card--does-not .trust-card__label > span {
+  background: #202d42;
+}
+
+[data-theme="dark"] .form-disabled .form-disabled__status {
+  background: var(--color-accent-soft);
+  color: var(--color-warning);
+}
+
+[data-theme="dark"] .page-hero__shape--contact {
+  border-color: #151f30;
 }
 
 @media (max-width: 820px) {

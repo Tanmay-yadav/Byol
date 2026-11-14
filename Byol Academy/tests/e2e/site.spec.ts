@@ -53,12 +53,18 @@ test("the theme toggle follows system preference and persists a manual choice", 
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator(".section--platforms")).toHaveCSS("background-color", "rgb(21, 31, 48)");
 
   await page.getByRole("button", { name: "Switch to light mode" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(page.getByRole("button", { name: "Switch to dark mode" })).toHaveAttribute("aria-pressed", "false");
+
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();
+  await page.goto("/contact");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator(".contact-form-panel")).toHaveCSS("background-color", "rgb(25, 35, 54)");
 });
 
 test("the site does not overflow the viewport horizontally", async ({ page }) => {

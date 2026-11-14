@@ -13,6 +13,19 @@ npm run dev
 
 The site is available at `http://localhost:3000`. The lead form is intentionally disabled unless its public and server-side enablement flags, approved-consent flag, Resend credentials, and Upstash Redis credentials are configured.
 
+## Light and dark themes
+
+The theme button in the site header switches the entire site between light and dark mode. The choice is saved in `localStorage` as `byol-theme`; when there is no saved choice, the site follows the visitor's operating-system color preference.
+
+How it works:
+
+1. `src/app/layout.tsx` runs a tiny `beforeInteractive` script to set `data-theme` on the root `<html>` before the page is painted. This prevents a light-theme flash when dark mode was previously selected.
+2. `src/components/Header.tsx` renders the accessible toggle button. Clicking it changes `data-theme`, saves the choice, and updates the icon and button label.
+3. `src/styles/globals.css` defines the shared color variables and uses `[data-theme="dark"]` selectors to restyle page sections, cards, forms, and other components site-wide.
+4. `tests/e2e/site.spec.ts` checks system preference, saved choices, and dark-mode styles on multiple routes.
+
+To add dark-mode support for a new component, prefer the existing `--color-*` variables for its foregrounds, borders, and surfaces. If it needs a special light background, add a matching `[data-theme="dark"]` rule in `globals.css`.
+
 ## Verification
 
 ```powershell

@@ -2,20 +2,25 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 import { brand, copy, navigation, platforms } from "@/content/site";
 import { trackEvent } from "@/lib/analytics";
 import { AnnouncementBar } from "./AnnouncementBar";
 
+function subscribeToTheme(callback: () => void) {
+  window.addEventListener("byol-theme-change", callback);
+  return () => window.removeEventListener("byol-theme-change", callback);
+}
+
+function getThemeSnapshot() {
+  return document.documentElement.dataset.theme === "dark";
+}
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, () => false);
   const menuButton = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setIsDark(document.documentElement.dataset.theme === "dark");
-  }, []);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -44,7 +49,7 @@ export function Header() {
     const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = nextTheme;
     window.localStorage.setItem("byol-theme", nextTheme);
-    setIsDark(nextTheme === "dark");
+    window.dispatchEvent(new Event("byol-theme-change"));
   }
 
   return (
